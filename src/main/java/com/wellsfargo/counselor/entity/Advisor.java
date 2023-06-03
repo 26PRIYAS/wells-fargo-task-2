@@ -1,86 +1,68 @@
-package com.wellsfargo.counselor.entity;
-
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+package com.wellsfargo.counselor.entity;
 
 @Entity
-public class Advisor {
-
+public class Portfolio {
     @Id
-    @GeneratedValue()
-    private long advisorId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     @Column(nullable = false)
-    private String firstName;
+    private String name;
 
-    @Column(nullable = false)
-    private String lastName;
+    private String description;
 
-    @Column(nullable = false)
-    private String address;
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Client client;
 
-    @Column(nullable = false)
-    private String phone;
+    @OneToMany(mappedBy = "portfolio", cascade = CascadeType.ALL)
+    private List<Security> securities;
 
-    @Column(nullable = false)
-    private String email;
-
-    protected Advisor() {
-
+    protected Portfolio() {
     }
 
-    public Advisor(String firstName, String lastName, String address, String phone, String email) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.phone = phone;
-        this.email = email;
+    public Portfolio(String name, String description) {
+        this.name = name;
+        this.description = description;
     }
 
-    public Long getAdvisorId() {
-        return advisorId;
+    public Long getId() {
+        return id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getDescription() {
+        return description;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getAddress() {
-        return address;
+    public Client getClient() {
+        return client;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setClient(Client client) {
+        this.client = client;
     }
 
-    public String getPhone() {
-        return phone;
+    public List<Security> getSecurities() {
+        return securities;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setSecurities(List<Security> securities) {
+        this.securities = securities;
     }
 }
